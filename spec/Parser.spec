@@ -1,9 +1,9 @@
 require 'rspec'
-require '../Parser/Parser.rb'
-require '../Parser/LaboratoryTestResult.rb'
+require './Parser/Parser.rb'
+require './Parser/LaboratoryTestResult.rb'
 
 describe Parser do
-    parser = Parser.new('../test1.txt')
+    parser = Parser.new('./test1.txt')
 
     describe '#mapped_results' do
 
