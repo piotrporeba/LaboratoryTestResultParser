@@ -21,13 +21,13 @@ class Parser
 
         @data.each do |d|
             split_data = d.split('|')
-            mapped_result = {}
-            mapped_result[:code] = split_data[2]
-            mapped_result[:result] = parse_result(split_data[3])
-            mapped_result[:format] = parse_format(split_data[2])
-            mapped_result[:comment] = parse_comments(split_data)
+           
+            code = split_data[2]
+            result = parse_result(split_data[3])
+            format = parse_format(split_data[2])
+            comments = parse_comments(d)
 
-            laboratory_test_result = LaboratoryTestResult.new(mapped_result)
+            laboratory_test_result = LaboratoryTestResult.new(code, result, format, comments)
             laboratory_test_results.push(laboratory_test_result)
             puts laboratory_test_result.print_it_all
         end
@@ -71,9 +71,19 @@ class Parser
 
     # Private: helper method to parse coments
     # returns array or comments for result
-    def parse_comments(val)
-
-        val.keep_if{|x| x=~/Comment*?/}
+    def parse_comments(data)
+        comments = []
+        # splitting result section into seperate lines
+        lines = data.split(/\n+/).reject(&:empty?)
+        # filtering out non coment lines
+        lines.reject! {|s| !s.include?("NTE")}
+        # adding comments to comments array
+        lines.map do |cl|
+            cl_split = cl.split('|')
+            comments.push(cl_split[2])
+        end
+  
+        comments
 
     end
 end
