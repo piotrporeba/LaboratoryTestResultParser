@@ -1,0 +1,2 @@
+OBX|1|A250|NEGATIVE|
+NTE|1|Comment for NEGATIVE result|
