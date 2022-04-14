@@ -5,41 +5,25 @@ require './Parser/LaboratoryTestResult.rb'
 describe Parser do
     parser = Parser.new('./test1.txt')
 
-    describe '#mapped_results' do
-
+    describe 'mapped_results' do
 
         let(:data){double}
-        let(:code) { "double" }
-        let(:result) { "double" }
-        let(:format) { "double" }
-        let(:comment) { "double" }
-        let(:mapped_result) do
-            {
-                code: code,
-                result: result,
-                format: format,
-                comment: comment
-            }
-
-        end
+        let(:code) { "A250" }
+        let(:result) { "result" }
+        let(:format) { "format" }
+        let(:comment) { ["Comment for NEGATIVE result"] }
         
-
         before do
             allow_any_instance_of(Parser).to receive(:initialize)
-            allow(parser).to receive(:parse_result).with(any_args).and_return('result')
-            allow(parser).to receive(:parse_format).with(any_args).and_return('format')
-            allow(parser).to receive(:parse_comment).with(any_args).and_return('comment')
-    
-            # allow(parser).to receive(LaboratoryTestResult).with(any_args).and_return(expected_result)
-
+            allow(parser).to receive(:parse_result).with(any_args).and_return(result)
+            allow(parser).to receive(:parse_format).with(any_args).and_return(format)
+            allow(parser).to receive(:parse_comment).with(any_args).and_return(comment)
         end
 
         it 'returns laboratory_test_results' do
-            laboratory_test_results = double("LaboratoryTestResult")
-            
-            # sorry, cought a brain freeze on this one. 
+   
             expect(parser.mapped_results).not_to be(nil)
-
+            expect(parser.mapped_results).to all be_an_instance_of(LaboratoryTestResult)
         end
     end
 
